@@ -14,7 +14,7 @@ Desenvolvimento : Já fiz algumas coisa pra web,android e alguns jogos
 Genericas: cálculo e física.
 
 # Interesses
-Academicos: me formar, e possivelmente apesar de não ser meu principal objetivo mestrado e doutorado.
+Academicos: me formar.
 
 Profissionais:simuladores de fisica, machine learning e web 
 
