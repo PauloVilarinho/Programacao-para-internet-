@@ -24,7 +24,9 @@ class Searcher:
         self.list.sort(key=lambda x: x['score'],reverse=True)
 
     def search(self, url, layers):
-        if self.keyword_in_url(url):
+        if self.url_in_list(url):
+            self.add_to_list(url)
+        elif self.keyword_in_url(url):
             self.add_to_list(url)
         if layers != 0:
             for links in self.get_all_links(url):
@@ -43,7 +45,7 @@ class Searcher:
             if 'href' in anchor.attrs:
                 if anchor['href'][0:2] == 'ht':
                     links.append(anchor['href'])
-        return links[0:10]
+        return links[0:5]
 
     def keyword_in_url(self, url):
         response = self.get_url_response(url)
@@ -68,6 +70,16 @@ class Searcher:
 
         return "não tem descrição"
 
+    def get_sentence(self,url):
+        response = self.get_url_response(url)
+        html_text = response.text
+        html_content = BeautifulSoup(html_text.lower(), 'lxml').find_all(text=True)
+        word = self.keyword.lower().split()[0]
+        for content in html_content:
+            if word in content:
+                position = content.find(word)
+                return content[position:20+position]
+
     def add_to_list(self, url):
 
         if self.url_in_list(url):
@@ -75,7 +87,8 @@ class Searcher:
         else:
             url_data = {
                 "url": url,
-                "sentence": self.get_description(url),
+                "description": self.get_description(url),
+                "sentence": self.get_sentence(url),
                 "score": 1,
             }
             self.list.append(url_data)
@@ -96,5 +109,5 @@ class Searcher:
 
 
 if __name__ == '__main__':
-    searcher = Searcher('charmander', 'https://www.pokemon.com/br/', 3)
+    searcher = Searcher('charmander', 'https://www.pokemon.com/br/', 2)
     print(searcher.list)
