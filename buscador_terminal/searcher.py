@@ -74,11 +74,10 @@ class Searcher:
         response = self.get_url_response(url)
         html_text = response.text
         html_content = BeautifulSoup(html_text.lower(), 'lxml').find_all(text=True)
+        text = " ".join(html_content)
         word = self.keyword.lower().split()[0]
-        for content in html_content:
-            if word in content:
-                position = content.find(word)
-                return content[position:20+position]
+        position = text.find(word)
+        return text[position-20:20+position]
 
     def add_to_list(self, url):
 
