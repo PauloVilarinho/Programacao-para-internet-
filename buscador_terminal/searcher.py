@@ -108,5 +108,6 @@ class Searcher:
 
 
 if __name__ == '__main__':
-    searcher = Searcher('charmander', 'https://www.pokemon.com/br/', 2)
-    print(searcher.list)
+    searcher = Searcher('pikachu', 'https://www.pokemon.com/br/', 2)
+    for url in searcher.list:
+        print(url)
